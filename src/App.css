@@ -1,0 +1,254 @@
+:root {
+  --bg: #0f0e17;
+  --surface: #1a1828;
+  --surface2: #231f35;
+  --gold: #c9a84c;
+  --gold-light: #e8c96d;
+  --text: #e8e0d0;
+  --text-muted: #9a8fa0;
+  --rarity-common: #aaaaaa;
+  --rarity-uncommon: #1eff00;
+  --rarity-rare: #0070dd;
+  --rarity-very-rare: #a335ee;
+  --rarity-legendary: #ff8000;
+  --border: #2e2a45;
+  --accent: #c9a84c;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Georgia', serif;
+}
+
+#root {
+  margin: 20px auto 100px;
+  width: calc(100% - 32px);
+  max-width: 900px;
+}
+
+/* Menu inferior */
+.c-menu {
+  background: var(--surface);
+  border-top: 1px solid var(--gold);
+  display: flex;
+  justify-content: space-around;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  padding: 8px 0;
+  z-index: 100;
+}
+
+.c-menu a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text-muted);
+  transition: color 0.2s;
+  min-width: 56px;
+}
+
+.c-menu a:hover,
+.c-menu a.active {
+  color: var(--gold);
+}
+
+.c-menu img {
+  height: 22px;
+  width: 22px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 2px;
+  filter: invert(1) sepia(1) saturate(0.5) brightness(0.8);
+}
+
+.c-menu a:hover img,
+.c-menu a.active img {
+  filter: invert(1) sepia(1) saturate(2) hue-rotate(5deg) brightness(1);
+}
+
+.c-menu p {
+  font-size: 11px;
+  font-family: sans-serif;
+}
+
+/* Titulos de pagina */
+.page-title {
+  font-size: 22px;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+}
+
+/* Buscador */
+.search-input {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+  margin-bottom: 12px;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: var(--gold);
+}
+
+/* Filtros */
+.filter-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.filter-btn {
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--surface2);
+}
+
+/* Tarjeta de item */
+.item-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-card:hover {
+  border-color: var(--gold);
+  background: var(--surface2);
+}
+
+.item-card .item-name {
+  font-size: 15px;
+  color: var(--text);
+}
+
+.item-card .item-rarity {
+  font-size: 12px;
+  font-family: sans-serif;
+  padding: 3px 8px;
+  border-radius: 12px;
+  background: var(--surface2);
+}
+
+/* Rareza colores */
+.rarity-common { color: var(--rarity-common); }
+.rarity-uncommon { color: var(--rarity-uncommon); }
+.rarity-rare { color: var(--rarity-rare); }
+.rarity-very-rare { color: var(--rarity-very-rare); }
+.rarity-legendary { color: var(--rarity-legendary); }
+
+/* Modal de detalle */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal-box {
+  background: var(--surface);
+  border: 1px solid var(--gold);
+  border-radius: 16px 16px 0 0;
+  padding: 24px 20px 40px;
+  width: 100%;
+  max-width: 640px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-title {
+  font-size: 20px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.modal-rarity {
+  font-size: 13px;
+  font-family: sans-serif;
+  margin-bottom: 14px;
+}
+
+.modal-desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.modal-close {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  background: var(--surface2);
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  color: var(--gold);
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.modal-fav-btn {
+  margin-top: 10px;
+  width: 100%;
+  padding: 12px;
+  background: var(--gold);
+  border: none;
+  border-radius: 8px;
+  color: var(--bg);
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Estado de carga */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Contador */
+.counter-text {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: sans-serif;
+  margin-bottom: 10px;
+}

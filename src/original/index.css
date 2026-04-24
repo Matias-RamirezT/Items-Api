@@ -1,0 +1,81 @@
+.original-subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-family: sans-serif;
+  margin-bottom: 24px;
+}
+
+.ruleta-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.ruleta-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+  color: var(--gold);
+  display: block;
+  transition: transform 0.3s;
+}
+
+.ruleta-icon.spinning {
+  animation: spin 0.5s linear infinite;
+  color: var(--text-muted);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.ruleta-result {
+  margin-bottom: 20px;
+}
+
+.ruleta-name {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.ruleta-rarity {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-family: sans-serif;
+  margin-bottom: 12px;
+}
+
+.ruleta-desc {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.spin-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--surface2);
+  border: 2px solid var(--gold);
+  border-radius: 10px;
+  color: var(--gold);
+  font-size: 16px;
+  font-family: 'Georgia', serif;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.spin-btn:hover:not(:disabled) {
+  background: var(--gold);
+  color: var(--bg);
+}
+
+.spin-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

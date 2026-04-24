@@ -1,0 +1,117 @@
+.info-page {
+  padding-bottom: 20px;
+}
+
+.info-hero {
+  text-align: center;
+  padding: 32px 0 28px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 28px;
+}
+
+.info-rune {
+  font-size: 40px;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.info-title {
+  font-size: 28px;
+  color: var(--gold-light);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.info-tagline {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-family: sans-serif;
+}
+
+.info-section {
+  margin-bottom: 28px;
+}
+
+.info-section-title {
+  font-size: 16px;
+  color: var(--gold);
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.info-text {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.8;
+  font-family: sans-serif;
+}
+
+.info-link {
+  color: var(--gold);
+}
+
+.info-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.info-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 10px;
+  text-align: center;
+}
+
+.info-card-icon {
+  font-size: 24px;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.info-card h3 {
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.info-card p {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: sans-serif;
+  line-height: 1.5;
+}
+
+.rarity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rarity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: sans-serif;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.rarity-item span:first-child {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+@media (max-width: 480px) {
+  .info-cards {
+    grid-template-columns: 1fr;
+  }
+}
