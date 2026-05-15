@@ -1,90 +1,168 @@
-import { useState, useEffect } from 'react'
-import './index.css'
+import React, { useState, useEffect } from 'react';
+import { createClient, Session } from '@supabase/supabase-js';
+import { UserCheck, UserX, Loader2 } from 'lucide-react';
+import './index.css';
 
-function Usuario() {
-  const [name, setName] = useState('')
-  const [savedName, setSavedName] = useState('')
-  const [favCount, setFavCount] = useState(0)
-  const [editing, setEditing] = useState(false)
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+export default function Usuario() {
+  const [session, setSession] = useState<Session | null>(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<{ text: string; type: 'error' | 'success' } | null>(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem('username') || ''
-    setSavedName(stored)
-    setName(stored)
-    const favs = JSON.parse(localStorage.getItem('favorites') || '[]')
-    setFavCount(favs.length)
-  }, [])
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+    });
 
-  function saveName() {
-    localStorage.setItem('username', name)
-    setSavedName(name)
-    setEditing(false)
-  }
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
 
-  function clearFavorites() {
-    localStorage.removeItem('favorites')
-    setFavCount(0)
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage(null);
+
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error) {
+      setMessage({ text: error.message, type: 'error' });
+    } else {
+      setMessage({ text: 'Registro exitoso. Revisa tu correo para validar la cuenta.', type: 'success' });
+    }
+    setLoading(false);
+  };
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage(null);
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      setMessage({ text: error.message, type: 'error' });
+    } else {
+      setMessage({ text: 'Has iniciado sesión correctamente.', type: 'success' });
+    }
+    setLoading(false);
+  };
+
+  const handleLogout = async () => {
+    setLoading(true);
+    const { error } = await supabase.auth.signOut();
+    setLoading(false);
+
+    if (error) {
+      setMessage({ text: error.message, type: 'error' });
+    } else {
+      setSession(null);
+      setEmail('');
+      setPassword('');
+      setMessage({ text: 'Sesión cerrada correctamente.', type: 'success' });
+    }
+  };
+
+  if (session) {
+    return (
+      <div className="usuario-card">
+        <div className="usuario-header">
+          <div className="usuario-status usuario-status--online">
+            <UserCheck size={28} />
+          </div>
+          <div className="usuario-heading">
+            <h2>Bienvenido</h2>
+            <p>{session.user.email}</p>
+          </div>
+        </div>
+
+        <div className="usuario-body">
+          <p className="usuario-tip">Tu sesión está activa y conectada a Supabase.</p>
+          <button
+            className="usuario-btn usuario-btn--danger"
+            onClick={handleLogout}
+            disabled={loading}
+          >
+            {loading ? <Loader2 className="loader" size={18} /> : 'Cerrar sesión'}
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h2 className="page-title">Mi Perfil</h2>
-
-      <div className="usuario-avatar">
-        <div className="avatar-circle">
-          {savedName ? savedName[0].toUpperCase() : '?'}
+    <div className="usuario-card">
+      <div className="usuario-header">
+        <div className="usuario-status usuario-status--offline">
+          <UserX size={28} />
         </div>
-        <p className="usuario-name">{savedName || 'Aventurero sin nombre'}</p>
-        <p className="usuario-sub">Explorador de objetos magicos</p>
-      </div>
-
-      <div className="usuario-stats">
-        <div className="stat-box">
-          <span className="stat-number">{favCount}</span>
-          <span className="stat-label">Favoritos</span>
-        </div>
-        <div className="stat-box">
-          <span className="stat-number">362</span>
-          <span className="stat-label">Objetos totales</span>
+        <div className="usuario-heading">
+          <h2>Acceso de usuario</h2>
+          <p>Inicia sesión o crea una cuenta para seguir.</p>
         </div>
       </div>
 
-      <div className="usuario-section">
-        <h3 className="usuario-section-title">Nombre de aventurero</h3>
-        {editing ? (
-          <div className="edit-row">
-            <input
-              className="search-input"
-              value={name}
-              onChange={e => setName(e.target.value)}
-              placeholder="Tu nombre..."
-            />
-            <button className="modal-fav-btn" onClick={saveName}>Guardar</button>
-            <button className="modal-close" onClick={() => setEditing(false)}>Cancelar</button>
+      <form className="usuario-form" onSubmit={handleLogin}>
+        <div className="usuario-field">
+          <label>Correo electrónico</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="ejemplo@correo.com"
+            required
+          />
+        </div>
+
+        <div className="usuario-field">
+          <label>Contraseña</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••••••"
+            required
+          />
+        </div>
+
+        {message && (
+          <div className={`usuario-message usuario-message--${message.type}`}>
+            {message.text}
           </div>
-        ) : (
-          <button className="modal-close" onClick={() => setEditing(true)}>
-            {savedName ? 'Cambiar nombre' : 'Agregar nombre'}
-          </button>
         )}
-      </div>
 
-      <div className="usuario-section">
-        <h3 className="usuario-section-title">Datos guardados</h3>
-        <p className="info-text" style={{ marginBottom: 12 }}>
-          Tienes {favCount} objeto{favCount !== 1 ? 's' : ''} en favoritos guardados en este dispositivo.
-        </p>
-        <button
-          className="modal-close"
-          style={{ color: '#cc4444', borderColor: '#cc4444' }}
-          onClick={clearFavorites}
-          disabled={favCount === 0}
-        >
-          Limpiar favoritos
-        </button>
-      </div>
+        <div className="usuario-actions">
+          <button
+            type="submit"
+            className="usuario-btn usuario-btn--primary"
+            disabled={loading || !email || !password}
+          >
+            {loading ? <Loader2 className="loader" size={18} /> : 'Iniciar sesión'}
+          </button>
+          <button
+            type="button"
+            className="usuario-btn usuario-btn--secondary"
+            onClick={handleSignUp}
+            disabled={loading || !email || !password}
+          >
+            {loading ? <Loader2 className="loader" size={18} /> : 'Registrarse'}
+          </button>
+        </div>
+      </form>
     </div>
-  )
+  );
 }
-
-export default Usuario

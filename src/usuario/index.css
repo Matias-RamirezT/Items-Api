@@ -1,80 +1,179 @@
-.usuario-avatar {
-  text-align: center;
-  padding: 24px 0;
-  margin-bottom: 20px;
-  border-bottom: 1px solid var(--border);
+.usuario-card {
+  width: min(100%, 420px);
+  margin: 0 auto;
+  padding: 26px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 22px;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.avatar-circle {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: var(--surface2);
-  border: 2px solid var(--gold);
+.usuario-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  color: var(--gold);
-  margin: 0 auto 12px;
+  gap: 16px;
 }
 
-.usuario-name {
-  font-size: 18px;
-  color: var(--text);
-  margin-bottom: 4px;
+.usuario-status {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(15, 23, 42, 0.08);
 }
 
-.usuario-sub {
-  font-size: 12px;
-  color: var(--text-muted);
-  font-family: sans-serif;
+.usuario-status--online {
+  background: #e6fffa;
+  color: #047857;
 }
 
-.usuario-stats {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
+.usuario-status--offline {
+  background: #f3f4f6;
+  color: #6b7280;
 }
 
-.stat-box {
-  flex: 1;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 16px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.usuario-heading h2 {
+  margin: 0 0 6px;
+  font-size: 1.4rem;
+  color: #111827;
 }
 
-.stat-number {
-  font-size: 28px;
-  color: var(--gold);
+.usuario-heading p {
+  margin: 0;
+  color: #475569;
+  font-size: 0.95rem;
 }
 
-.stat-label {
-  font-size: 11px;
-  color: var(--text-muted);
-  font-family: sans-serif;
-}
-
-.usuario-section {
-  margin-bottom: 24px;
-}
-
-.usuario-section-title {
-  font-size: 14px;
-  color: var(--gold);
-  margin-bottom: 12px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--border);
-  font-family: sans-serif;
-}
-
-.edit-row {
+.usuario-body {
   display: flex;
   flex-direction: column;
+  gap: 16px;
+}
+
+.usuario-tip {
+  margin: 0;
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.usuario-form {
+  display: grid;
+  gap: 18px;
+}
+
+.usuario-field {
+  display: grid;
   gap: 8px;
+}
+
+.usuario-field label {
+  font-size: 0.95rem;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.usuario-field input {
+  width: 100%;
+  min-height: 46px;
+  border-radius: 14px;
+  border: 1px solid #d1d5db;
+  padding: 12px 14px;
+  font-size: 1rem;
+  color: #0f172a;
+  background: #f9fafb;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.usuario-field input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+  background: #ffffff;
+}
+
+.usuario-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.usuario-btn {
+  width: 100%;
+  min-height: 46px;
+  border: none;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.usuario-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.usuario-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.usuario-btn--primary {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.usuario-btn--primary:hover {
+  background: #1d4ed8;
+}
+
+.usuario-btn--secondary {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.usuario-btn--secondary:hover {
+  background: #e5e7eb;
+}
+
+.usuario-btn--danger {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.usuario-btn--danger:hover {
+  background: #b91c1c;
+}
+
+.usuario-message {
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.usuario-message--error {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.usuario-message--success {
+  background: #ecfdf5;
+  color: #0f766e;
+}
+
+.loader {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
